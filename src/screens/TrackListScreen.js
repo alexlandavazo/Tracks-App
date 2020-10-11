@@ -7,26 +7,35 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 const TrackListScreen = ({ navigation }) => {
   const { state, fetchTracks } = useContext(TrackContext);
-  console.log(state);
   return (
     <>
       <NavigationEvents onWillFocus={fetchTracks} />
-      <Text style={{ fontSize: 48 }}>TrackListScreen</Text>
       <FlatList
         data={state}
-        keyExtractor={item => item._id}
+        keyExtractor={(item) => item._id}
         renderItem={({ item }) => {
           return (
-            <TouchableOpacity onPress={() => {
-              navigation.navigate("TrackDetail", {_id: item._id})
-            }} >
-              <ListItem chevron title={item.name} />
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("TrackDetail", { _id: item._id });
+              }}
+            >
+              <ListItem>
+                <ListItem.Title>{item.name}</ListItem.Title>
+                <ListItem.Chevron color="white" />
+              </ListItem>
             </TouchableOpacity>
           );
         }}
       />
     </>
   );
+};
+
+TrackListScreen.navigationOptions = () => {
+  return {
+    title: "Track List",
+  };
 };
 
 const styles = StyleSheet.create({});
